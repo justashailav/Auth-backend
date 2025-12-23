@@ -1,26 +1,21 @@
-import nodemailer from "nodemailer";
+import SibApiV3Sdk from "sib-api-v3-sdk";
 
 const sendEmail = async ({ email, subject, message }) => {
-  const transporter = nodemailer.createTransport({
-    service: "gmail",          // ✅ use ONLY service
-    port: 587,                 // ✅ TLS port
-    secure: false,             // ✅ MUST be false for 587
-    auth: {
-      user: process.env.SMTP_MAIL,
-      pass: process.env.SMTP_PASSWORD,
-    },
-    tls: {
-      rejectUnauthorized: false, // ✅ avoids Render TLS issues
-    },
-  });
+  const client = SibApiV3Sdk.ApiClient.instance;
 
-  await transporter.verify();   // ✅ catches errors early
+  client.authentications["api-key"].apiKey =
+    process.env.BREVO_API_KEY;
 
-  await transporter.sendMail({
-    from: `"Auth App" <${process.env.SMTP_MAIL}>`,
-    to: email,
+  const apiInstance = new SibApiV3Sdk.TransactionalEmailsApi();
+
+  await apiInstance.sendTransacEmail({
+    sender: {
+      email: "no-reply@brevo.com", // ✅ domain NOT required
+      name: "Auth App",
+    },
+    to: [{ email }],
     subject,
-    html: message,
+    htmlContent: message,
   });
 };
 
