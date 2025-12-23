@@ -10,7 +10,7 @@ const sendEmail = async ({ email, subject, message }) => {
 
   await apiInstance.sendTransacEmail({
     sender: {
-      email: "contact@brevo.com", 
+      email: "justashailav02@gmail.com", 
       name: "Auth App",
     },
     to: [{ email }],
