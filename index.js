@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 import connectDb from "./config/db.js"
 import cors from "cors";
 import userRoute from "./routes/userRoute.js"
-
+import productRoute from "./routes/productRoute.js"
 const app=express();
 dotenv.config({});
 app.use(express.json());
@@ -23,7 +23,7 @@ app.use(cors(corsOptions));
 connectDb()
 
 app.use("/api/v1/user",userRoute);
-
+app.use("/api/v1/product",productRoute);
 app.listen(PORT,()=>{
     console.log(`Server running at port ${PORT}`);
 })
