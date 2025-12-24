@@ -1,20 +1,29 @@
+import { uploadMedia } from "../config/cloudinary.js";
 import { Product } from "../models/productModel.js";
 
 export const createProduct = async (req, res) => {
   try {
-    const { productName, price, category,salesPrice,stock } = req.body;
+    const { productName, price, category, salesPrice, stock } = req.body;
     if (!productName || !price || !category) {
       return res.status(400).json({
         success: false,
-        message: "productName, price and category are required",
+        message: "ProductName, price and category are required",
       });
     }
+    const files = req.files || [];
+
+    const mainImage = await uploadMedia(files[0].path);
+    const gallery = await Promise.all(
+      files.slice(1).map((f) => uploadMedia(f.path))
+    );
     const product = await Product.create({
       productName,
       price,
       stock,
       salesPrice,
       category,
+      image: mainImage.secure_url,
+      images: gallery.map(i => i.secure_url),
     });
     res.status(201).json({
       success: true,
@@ -46,4 +55,3 @@ export const getAllProducts = async (req, res) => {
     });
   }
 };
-
