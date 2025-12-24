@@ -4,7 +4,7 @@ export const createProduct = async (req, res) => {
   try {
     const { productName, price, category,salesPrice,stock } = req.body;
     if (!productName || !price || !category) {
-      res.status(400).json({
+      return res.status(400).json({
         success: false,
         message: "productName, price and category are required",
       });
