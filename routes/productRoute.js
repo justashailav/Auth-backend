@@ -5,3 +5,5 @@ const router =express.Router()
 
 router.post("/create-product",createProduct);
 router.get("/getAllProducts",getAllProducts)
+
+export default router;
