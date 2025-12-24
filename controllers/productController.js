@@ -2,7 +2,7 @@ import { Product } from "../models/productModel.js";
 
 export const createProduct = async (req, res) => {
   try {
-    const { productName, price, category } = req.body;
+    const { productName, price, category,salesPrice,stock } = req.body;
     if (!productName || !price || !category) {
       res.status(400).json({
         success: false,

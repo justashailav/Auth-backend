@@ -6,15 +6,15 @@ const productSchema=new mongoose.Schema({
         required:true
     },
     price:{
-        type:String,
+        type:Number,
         required:true
     },
     stock:{
-        stype:String,
+        type:Number,
         required:true
     },
     salesPrice:{
-        type:String,
+        type:Number,
         required:true
     },
     category:{
