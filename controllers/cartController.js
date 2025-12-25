@@ -13,13 +13,6 @@ export const addToCart = async (req, res) => {
       });
     }
 
-    if (product.stock < quantity) {
-      return res.status(400).json({
-        success: false,
-        message: "Insufficient stock",
-      });
-    }
-
     let cart = await Cart.findOne({ user: req.user._id });
 
     if (!cart) {
@@ -35,9 +28,27 @@ export const addToCart = async (req, res) => {
 
     const price = product.salesPrice || product.price;
 
+    // 🔒 STOCK VALIDATION (IMPORTANT)
     if (itemIndex > -1) {
-      cart.items[itemIndex].quantity += quantity;
+      const existingQty = cart.items[itemIndex].quantity;
+      const newQty = existingQty + quantity;
+
+      if (newQty > product.stock) {
+        return res.status(400).json({
+          success: false,
+          message: "Quantity exceeds available stock",
+        });
+      }
+
+      cart.items[itemIndex].quantity = newQty;
     } else {
+      if (quantity > product.stock) {
+        return res.status(400).json({
+          success: false,
+          message: "Quantity exceeds available stock",
+        });
+      }
+
       cart.items.push({
         product: product._id,
         productName: product.productName,
@@ -62,6 +73,7 @@ export const addToCart = async (req, res) => {
     });
   }
 };
+
 export const getCart = async (req, res) => {
   try {
     const cart = await Cart.findOne({ user: req.user._id });
