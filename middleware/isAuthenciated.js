@@ -2,7 +2,7 @@ import jwt from "jsonwebtoken";
 import { User } from "../models/userModel.js";
 export const isAuthenticated = async (req, res, next) => {
   try {
-    const token = req.cookies;
+    const token = req.cookies.token;
 
     if (!token) {
       return res.status(401).json({
