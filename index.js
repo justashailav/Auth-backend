@@ -5,6 +5,7 @@ import connectDb from "./config/db.js"
 import cors from "cors";
 import userRoute from "./routes/userRoute.js"
 import productRoute from "./routes/productRoute.js"
+import cartRoute from "./routes/cartRoute.js"
 const app=express();
 dotenv.config({});
 app.use(express.json());
@@ -24,6 +25,7 @@ connectDb()
 
 app.use("/api/v1/user",userRoute);
 app.use("/api/v1/product",productRoute);
+app.use("/api/v1/cart",cartRoute);
 app.listen(PORT,()=>{
     console.log(`Server running at port ${PORT}`);
 })
