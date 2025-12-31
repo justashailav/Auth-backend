@@ -7,6 +7,7 @@ import userRoute from "./routes/userRoute.js"
 import productRoute from "./routes/productRoute.js"
 import cartRoute from "./routes/cartRoute.js"
 import addressRoute from "./routes/addressRoute.js"
+import orderRoute from "./routes/orderRoute.js"
 const app=express();
 dotenv.config({});
 app.use(express.json());
@@ -28,6 +29,7 @@ app.use("/api/v1/user",userRoute);
 app.use("/api/v1/product",productRoute);
 app.use("/api/v1/cart",cartRoute);
 app.use("/api/v1/address",addressRoute);
+app.use("/api/v1/order",orderRoute);
 app.listen(PORT,()=>{
     console.log(`Server running at port ${PORT}`);
 })
