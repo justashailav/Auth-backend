@@ -10,23 +10,21 @@ router.get("/:id", isAuthenticated, getOrderById);
 router.put("/cancel/:id", isAuthenticated, cancelOrder);
 
 
-// Get all orders
-router.get("/admin/all",isAuthenticated,authorizeRoles("admin"),getAllOrders);
 
-// Update order status
-router.put(
-  "/admin/update/:id",
-  isAuthenticated,
-  authorizeRoles("admin"),
-  updateOrderStatus
-);
+// router.get("/admin/all",isAuthenticated,authorizeRoles("admin"),getAllOrders);
 
-// Mark order as delivered
-router.put(
-  "/admin/deliver/:id",
-  isAuthenticated,
-  authorizeRoles("admin"),
-  markOrderDelivered
-);
+// router.put(
+//   "/admin/update/:id",
+//   isAuthenticated,
+//   authorizeRoles("admin"),
+//   updateOrderStatus
+// );
+
+// router.put(
+//   "/admin/deliver/:id",
+//   isAuthenticated,
+//   authorizeRoles("admin"),
+//   markOrderDelivered
+// );
 
 export default router;
